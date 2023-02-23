@@ -1,6 +1,6 @@
 package Pactica2.dominio;
 
-public class dominio {
+public class Tablero {
 
     private int[][] estadoActual;
     private int[][] estadoSiguiente = new int[30][30];
@@ -14,7 +14,21 @@ public class dominio {
         }
     }
     public void generarEstadoActualMontecarlo() {
-
+        for (int i = 0; i < 30; i++) {
+            for (int j = 0; j < 30; j++) {
+                int vecinos = contarVecinos(i, j);
+                if (vecinos < 2) {
+                    estadoSiguiente[i][j] = 0;
+                } else if (vecinos == 2) {
+                    estadoSiguiente[i][j] = estadoActual[i][j];
+                } else if (vecinos == 3) {
+                    estadoSiguiente[i][j] = 1;
+                } else if (vecinos > 3) {
+                    estadoSiguiente[i][j] = 0;
+                }
+            }
+        }
+        estadoActual = estadoSiguiente;
     }
     public void transitarEstadoSiguiente() {
         for (int i = 0; i < 30; i++) {
